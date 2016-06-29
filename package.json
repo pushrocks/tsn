@@ -20,6 +20,7 @@
   },
   "homepage": "https://gitlab.com/pushrocks/tsn#README",
   "dependencies": {
-    "typescript": "^2.0.0-dev.20160629"
+    "typescript": "^1.8.10",
+    "typings-global": "^1.0.3"
   }
 }
