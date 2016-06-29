@@ -23,6 +23,7 @@ let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void 
 }
 
 let compileOptions:plugins.ts.CompilerOptions = {
+    declaration: true,
     inlineSourceMap: true,
     noEmitOnError: true,
     noImplicitAny: true,
