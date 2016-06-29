@@ -5,7 +5,7 @@ plugins.shelljs.exec("cd test & tsc index.ts");
 export let transpile = (fromArg:string,toArg:string) => {
 };
 
-export let compile = (fileNames: string[], options: plugins.ts.CompilerOptions): void => {
+let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void => {
     let program = plugins.ts.createProgram(fileNames, options);
     let emitResult = program.emit();
 
@@ -22,9 +22,14 @@ export let compile = (fileNames: string[], options: plugins.ts.CompilerOptions):
     process.exit(exitCode);
 }
 
-compile(process.argv.slice(2), {
+let compileOptions:plugins.ts.CompilerOptions = {
+    inlineSourceMap: true,
     noEmitOnError: true,
     noImplicitAny: true,
     target: plugins.ts.ScriptTarget.ES5,
     module: plugins.ts.ModuleKind.CommonJS
-});
+};
+
+export let compile = (filesArg:string[],outDirArg) => {
+    compiler(filesArg,compileOptions);
+}

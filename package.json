@@ -22,5 +22,8 @@
   "dependencies": {
     "typescript": "^1.8.10",
     "typings-global": "^1.0.3"
+  },
+  "devDependencies": {
+    "npmts-g": "^5.2.6"
   }
 }
