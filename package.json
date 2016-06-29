@@ -1,0 +1,25 @@
+{
+  "name": "tsn",
+  "version": "1.0.0",
+  "description": "TypeScript nightly to easily make use of latest features",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "(npmts)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/pushrocks/tsn.git"
+  },
+  "keywords": [
+    "TypeScript"
+  ],
+  "author": "Lossless GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/pushrocks/tsn/issues"
+  },
+  "homepage": "https://gitlab.com/pushrocks/tsn#README",
+  "dependencies": {
+    "typescript": "^2.0.0-dev.20160629"
+  }
+}
