@@ -22,6 +22,7 @@
   "homepage": "https://gitlab.com/pushrocks/tsn#README",
   "dependencies": {
     "@types/q": "0.0.21-alpha",
+    "@types/shelljs": "^0.3.21-alpha",
     "beautylog": "^5.0.12",
     "lodash": "^4.13.1",
     "q": "^1.4.1",

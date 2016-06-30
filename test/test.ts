@@ -1,4 +1,3 @@
-
 import * as smartpath from "smartpath";
 import * as tsn from "../dist/index";
 

@@ -1,4 +1,4 @@
-import "typings-global";
+// import all the stuff we need
 import * as plugins from "./tsn.plugins";
 
 let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void => {
@@ -14,8 +14,12 @@ let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void 
     });
 
     let exitCode = emitResult.emitSkipped ? 1 : 0;
-    console.log(`Process exiting with code '${exitCode}'.`);
-    process.exit(exitCode);
+    if(exitCode == 0){
+        plugins.beautylog.ok("TypeScript emit succeeded!");
+    } else {
+        plugins.beautylog.error("TypeScript emit failed. Please investigate!");
+        process.exit(exitCode);
+    }
 }
 
 let compilerOptions:plugins.ts.CompilerOptions = {
@@ -30,5 +34,8 @@ let compilerOptions:plugins.ts.CompilerOptions = {
 export let compile = (filesArg:string[],outDirArg:string) => {
     let assignedOptions:plugins.ts.CompilerOptions = {};
     assignedOptions = plugins.lodash.assign(assignedOptions,compiler,{outDir:outDirArg});
+
+    plugins.beautylog.info("checking files before compilation");
+
     compiler(filesArg,assignedOptions);
 }
