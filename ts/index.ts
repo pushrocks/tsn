@@ -2,6 +2,7 @@
 import * as plugins from "./tsn.plugins";
 
 let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void => {
+    let done = plugins.q.defer();
     let program = plugins.ts.createProgram(fileNames, options);
     let emitResult = program.emit();
 
@@ -16,10 +17,12 @@ let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void 
     let exitCode = emitResult.emitSkipped ? 1 : 0;
     if(exitCode == 0){
         plugins.beautylog.ok("TypeScript emit succeeded!");
+        done.resolve();
     } else {
         plugins.beautylog.error("TypeScript emit failed. Please investigate!");
         process.exit(exitCode);
     }
+    return done.promise;
 }
 
 let compilerOptions:plugins.ts.CompilerOptions = {
@@ -33,9 +36,7 @@ let compilerOptions:plugins.ts.CompilerOptions = {
 
 export let compile = (filesArg:string[],outDirArg:string) => {
     let assignedOptions:plugins.ts.CompilerOptions = {};
-    assignedOptions = plugins.lodash.assign(assignedOptions,compiler,{outDir:outDirArg});
-
+    assignedOptions = plugins.lodash.assign(assignedOptions,compiler,{outDir:outDirArg}); // create final options
     plugins.beautylog.info("checking files before compilation");
-
-    compiler(filesArg,assignedOptions);
+    return compiler(filesArg,assignedOptions); // return the promise from compiler(); 
 }
