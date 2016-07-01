@@ -36,7 +36,7 @@ let compilerOptions:plugins.ts.CompilerOptions = {
 
 export let compile = (filesArg:string[],outDirArg:string) => {
     let assignedOptions:plugins.ts.CompilerOptions = {};
-    assignedOptions = plugins.lodash.assign(assignedOptions,compiler,{outDir:outDirArg}); // create final options
+    assignedOptions = plugins.lodash.assign(assignedOptions,compilerOptions,{outDir:outDirArg}); // create final options
     plugins.beautylog.info("checking files before compilation");
     return compiler(filesArg,assignedOptions); // return the promise from compiler(); 
 }
