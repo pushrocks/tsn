@@ -28,8 +28,8 @@ let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void 
 let compilerOptions:plugins.ts.CompilerOptions = {
     declaration: true,
     inlineSourceMap: true,
-    noEmitOnError: true,
-    noImplicitAny: true,
+    noEmitOnError: false,
+    noImplicitAny: false,
     target: plugins.ts.ScriptTarget.ES5,
     module: plugins.ts.ModuleKind.CommonJS
 };
