@@ -27,7 +27,7 @@
     "lodash": "^4.13.1",
     "q": "^1.4.1",
     "smartpath": "^3.2.2",
-    "typescript": "beta",
+    "typescript": "^2.0.0",
     "typings-global": "^1.0.6"
   },
   "devDependencies": {
