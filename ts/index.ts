@@ -30,7 +30,7 @@ let compilerOptions:plugins.ts.CompilerOptions = {
     inlineSourceMap: true,
     noEmitOnError: false,
     noImplicitAny: false,
-    target: plugins.ts.ScriptTarget.ES5,
+    target: plugins.ts.ScriptTarget.ES6,
     module: plugins.ts.ModuleKind.CommonJS
 };
 

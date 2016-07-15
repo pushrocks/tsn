@@ -27,7 +27,7 @@ var compilerOptions = {
     inlineSourceMap: true,
     noEmitOnError: false,
     noImplicitAny: false,
-    target: plugins.ts.ScriptTarget.ES5,
+    target: plugins.ts.ScriptTarget.ES6,
     module: plugins.ts.ModuleKind.CommonJS
 };
 exports.compile = function (filesArg, outDirArg) {
