@@ -1,7 +1,7 @@
 // import all the stuff we need
 import * as plugins from "./tsn.plugins";
 import {CompilerOptions} from "typescript";
-export {CompilerOptions} from "typescript";
+export {CompilerOptions,ScriptTarget,ModuleKind} from "typescript";
 
 let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions): void => {
     let done = plugins.q.defer();
