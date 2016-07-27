@@ -27,7 +27,7 @@ let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions
     return done.promise;
 }
 
-let compilerOptions:CompilerOptions = {
+let compilerOptionsDefault:CompilerOptions = {
     declaration: true,
     inlineSourceMap: true,
     noEmitOnError: false,
@@ -36,9 +36,9 @@ let compilerOptions:CompilerOptions = {
     module: plugins.typescript.ModuleKind.CommonJS
 };
 
-export let compile = (filesArg:string[],outDirArg:string,compilerOptions:CompilerOptions) => {
-    let assignedOptions:CompilerOptions = {};
-    assignedOptions = plugins.lodash.assign(assignedOptions,compilerOptions,{outDir:outDirArg}); // create final options
+export let compile = (filesArg:string[],outDirArg:string,compilerOptionsArg:CompilerOptions) => {
+    let mergedOptions:CompilerOptions = {};
+    mergedOptions = plugins.lodash.merge(mergedOptions,compilerOptionsDefault,compilerOptionsArg,{outDir:outDirArg}); // create final options
     plugins.beautylog.info("checking files before compilation");
-    return compiler(filesArg,assignedOptions); // return the promise from compiler(); 
+    return compiler(filesArg,mergedOptions); // return the promise from compiler(); 
 }
