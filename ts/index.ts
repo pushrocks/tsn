@@ -1,16 +1,18 @@
 // import all the stuff we need
 import * as plugins from "./tsn.plugins";
+import {CompilerOptions} from "typescript";
+export {CompilerOptions} from "typescript";
 
-let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void => {
+let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions): void => {
     let done = plugins.q.defer();
-    let program = plugins.ts.createProgram(fileNames, options);
+    let program = plugins.typescript.createProgram(fileNames, options);
     let emitResult = program.emit();
 
-    let allDiagnostics = plugins.ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
+    let allDiagnostics = plugins.typescript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
 
     allDiagnostics.forEach((diagnostic) => {
         let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
-        let message = plugins.ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+        let message = plugins.typescript.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
         console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
     });
 
@@ -25,17 +27,17 @@ let compiler = (fileNames: string[], options: plugins.ts.CompilerOptions): void 
     return done.promise;
 }
 
-let compilerOptions:plugins.ts.CompilerOptions = {
+let compilerOptions:CompilerOptions = {
     declaration: true,
     inlineSourceMap: true,
     noEmitOnError: false,
     noImplicitAny: false,
-    target: plugins.ts.ScriptTarget.ES6,
-    module: plugins.ts.ModuleKind.CommonJS
+    target: plugins.typescript.ScriptTarget.ES6,
+    module: plugins.typescript.ModuleKind.CommonJS
 };
 
-export let compile = (filesArg:string[],outDirArg:string) => {
-    let assignedOptions:plugins.ts.CompilerOptions = {};
+export let compile = (filesArg:string[],outDirArg:string,compilerOptions:CompilerOptions) => {
+    let assignedOptions:CompilerOptions = {};
     assignedOptions = plugins.lodash.assign(assignedOptions,compilerOptions,{outDir:outDirArg}); // create final options
     plugins.beautylog.info("checking files before compilation");
     return compiler(filesArg,assignedOptions); // return the promise from compiler(); 

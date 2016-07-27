@@ -4,4 +4,4 @@ export let lodash = require("lodash");
 export let q = require("q");
 export import shelljs = require("shelljs");
 export import smartpath = require("smartpath");
-export import ts = require("typescript");
+export import typescript = require("typescript");
