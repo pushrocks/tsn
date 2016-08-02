@@ -23,16 +23,16 @@
   "dependencies": {
     "@types/q": "*",
     "@types/shelljs": "*",
-    "beautylog": "^5.0.13",
-    "lodash": "^4.13.1",
+    "beautylog": "^5.0.18",
+    "lodash": "^4.14.1",
     "q": "^1.4.1",
     "smartpath": "^3.2.2",
-    "typescript": "^2.0.0",
+    "typescript": "next",
     "typings-global": "^1.0.6"
   },
   "devDependencies": {
-    "npmts-g": "^5.2.6",
-    "should": "^9.0.2",
+    "npmts-g": "^5.2.8",
+    "should": "^10.0.0",
     "typings-test": "^1.0.1"
   }
 }
