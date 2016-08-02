@@ -1,6 +1,6 @@
 {
   "name": "tsn",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "TypeScript nightly to easily make use of latest features",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
