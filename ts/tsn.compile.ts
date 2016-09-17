@@ -17,8 +17,6 @@ let compilerOptionsDefault: CompilerOptions = {
     target: plugins.typescript.ScriptTarget.ES6
 }
 
-
-
 /**
  * merges compilerOptions
  */
@@ -103,7 +101,8 @@ export let compileGlobStringObject = (
             `TypeScript assignment: transpile from ${keyArg.blue} to ${globStringArrayArg[keyArg].blue}`
         )
         plugins.smartfile.fs.listFileTree(process.cwd(), keyArg)
-            .then((filesToConvertArg: string[]) => {
+            .then(
+            (filesToConvertArg: string[]) => {
                 let absoluteFilePathArray: string[] = plugins.smartpath.transform.toAbsolute(
                     filesToConvertArg,
                     cwdArg
@@ -117,6 +116,9 @@ export let compileGlobStringObject = (
                     destDir,
                     tsOptionsArg
                 )
+            },
+            (err) => {
+                console.log(err)
             })
             .then(cycleDone.resolve)
     }

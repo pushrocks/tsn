@@ -15,11 +15,13 @@ let assetfiles2 = {
 describe('tsn', function () {
     describe('compileFileArray', function () {
         it('should convert files from an array with single files to output', function () {
+            this.timeout(5000)
             tsn.compileFileArray(assetfiles, './test/assets/output')
         })
     })
     describe('compileFileArray', function () {
         it('should convert files from an array with single files to output', function () {
+            this.timeout(5000)
             tsn.compileGlobStringObject(assetfiles2)
         })
     })
