@@ -89,7 +89,11 @@ export let compileFileArray = (
  *     './some/origin/folder/**\/*.ts': './some/destination/folder'
  * }
  */
-export let compileGlobStringObject = (globStringArrayArg: any, tsOptionsArg: CompilerOptions = {}, cwd?: string) => {
+export let compileGlobStringObject = (
+    globStringArrayArg: any,
+    tsOptionsArg: CompilerOptions = {},
+    cwdArg: string = process.cwd()
+) => {
     let done = plugins.q.defer<void>()
     let promiseArray: plugins.q.Promise<void>[] = []
     for (let keyArg in globStringArrayArg) {
@@ -102,11 +106,11 @@ export let compileGlobStringObject = (globStringArrayArg: any, tsOptionsArg: Com
             .then((filesToConvertArg: string[]) => {
                 let absoluteFilePathArray: string[] = plugins.smartpath.transform.toAbsolute(
                     filesToConvertArg,
-                    process.cwd()
+                    cwdArg
                 )
                 let destDir: string = plugins.smartpath.transform.toAbsolute(
                     globStringArrayArg[keyArg],
-                    process.cwd()
+                    cwdArg
                 )
                 return compileFileArray(
                     absoluteFilePathArray,
