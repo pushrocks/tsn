@@ -7,6 +7,20 @@ let assetfiles: string[] = [
     './test/assets/tocompile.ts',
     './test/assets/tocompile2.ts'
 ]
-let assetfilesAbsolute: string[] = smartpath.transform.toAbsolute(assetfiles,process.cwd())
-console.log(assetfilesAbsolute)
-tsn.compile(assetfilesAbsolute,smartpath.transform.toAbsolute('./test/assets/output',process.cwd()),{})
+
+let assetfiles2 = {
+    './test/assets/**/*.ts': './test/assets/output'
+}
+
+describe('tsn', function () {
+    describe('compileFileArray', function () {
+        it('should convert files from an array with single files to output', function () {
+            tsn.compileFileArray(assetfiles, './test/assets/output')
+        })
+    })
+    describe('compileFileArray', function () {
+        it('should convert files from an array with single files to output', function () {
+            tsn.compileGlobStringObject(assetfiles2)
+        })
+    })
+})

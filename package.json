@@ -21,11 +21,14 @@
   },
   "homepage": "https://gitlab.com/pushrocks/tsn#README",
   "dependencies": {
-    "@types/q": "*",
+    "@types/lodash": "^4.14.34",
+    "@types/q": "0.x.x",
     "@types/shelljs": "*",
+    "@types/should": "^8.1.29",
     "beautylog": "^5.0.23",
     "lodash": "^4.15.0",
     "q": "^1.4.1",
+    "smartfile": "^4.0.15",
     "smartpath": "^3.2.2",
     "typescript": "next",
     "typings-global": "^1.0.14"

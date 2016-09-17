@@ -1,0 +1,121 @@
+// import all the stuff we need
+import * as plugins from './tsn.plugins'
+import { CompilerOptions } from 'typescript'
+export { CompilerOptions, ScriptTarget, ModuleKind } from 'typescript'
+
+/**
+ * the default typescript compilerOptions
+ */
+let compilerOptionsDefault: CompilerOptions = {
+    declaration: true,
+    emitDecoratorMetadata: true,
+    experimentalDecorators: true,
+    inlineSourceMap: true,
+    noEmitOnError: false,
+    module: plugins.typescript.ModuleKind.CommonJS,
+    noImplicitAny: false,
+    target: plugins.typescript.ScriptTarget.ES6
+}
+
+
+
+/**
+ * merges compilerOptions
+ */
+let mergeCompilerOptions = function (customTsOptions: CompilerOptions, outDirArg: string): CompilerOptions {
+    // convert strings for module kind etc. to enum values
+    if (customTsOptions.module) { customTsOptions.module = plugins.typescript.ModuleKind[customTsOptions.module] }
+    if (customTsOptions.target) { customTsOptions.target = plugins.typescript.ScriptTarget[customTsOptions.target] }
+
+    // create merged options 
+    let mergedOptions: CompilerOptions = {} // create base 
+    plugins.lodash.merge( // create final options
+        mergedOptions, // things get merged into first object
+        compilerOptionsDefault,
+        customTsOptions,
+        { outDir: outDirArg }
+    )
+
+    return mergedOptions
+}
+
+/**
+ * the internal main compiler function that compiles the files
+ */
+let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions): plugins.q.Promise<void> => {
+    let done = plugins.q.defer<void>()
+    let program = plugins.typescript.createProgram(fileNames, options)
+    let emitResult = program.emit()
+
+    let allDiagnostics = plugins.typescript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
+
+    allDiagnostics.forEach((diagnostic) => {
+        let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start)
+        let message = plugins.typescript.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+        console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
+    })
+
+    let exitCode = emitResult.emitSkipped ? 1 : 0
+    if (exitCode === 0) {
+        plugins.beautylog.ok('TypeScript emit succeeded!')
+        done.resolve()
+    } else {
+        plugins.beautylog.error('TypeScript emit failed. Please investigate!')
+        process.exit(exitCode)
+    }
+
+    return done.promise
+}
+
+/**
+ * compile am array of absolute file paths
+ */
+export let compileFileArray = (
+    fileStringArrayArg: string[],
+    destDir: string,
+    compilerOptionsArg: CompilerOptions = {}
+): plugins.q.Promise<void> => {
+    plugins.beautylog.info('checking files before compilation')
+    return compiler(
+        fileStringArrayArg,
+        mergeCompilerOptions(compilerOptionsArg, destDir)
+    ) // return the promise from compiler()
+}
+
+/**
+ * compile advanced glob configurations
+ * @param globStringArrayArg a array of glob strings
+ * {
+ *     './some/origin/folder/**\/*.ts': './some/destination/folder'
+ * }
+ */
+export let compileGlobStringObject = (globStringArrayArg: any, tsOptionsArg: CompilerOptions = {}, cwd?: string) => {
+    let done = plugins.q.defer<void>()
+    let promiseArray: plugins.q.Promise<void>[] = []
+    for (let keyArg in globStringArrayArg) {
+        let cycleDone = plugins.q.defer<void>()
+        promiseArray.push(cycleDone.promise)
+        plugins.beautylog.info(
+            `TypeScript assignment: transpile from ${keyArg.blue} to ${globStringArrayArg[keyArg].blue}`
+        )
+        plugins.smartfile.fs.listFileTree(process.cwd(), keyArg)
+            .then((filesToConvertArg: string[]) => {
+                let absoluteFilePathArray: string[] = plugins.smartpath.transform.toAbsolute(
+                    filesToConvertArg,
+                    process.cwd()
+                )
+                let destDir: string = plugins.smartpath.transform.toAbsolute(
+                    globStringArrayArg[keyArg],
+                    process.cwd()
+                )
+                return compileFileArray(
+                    absoluteFilePathArray,
+                    destDir,
+                    tsOptionsArg
+                )
+            })
+            .then(cycleDone.resolve)
+    }
+    plugins.q.all<void>(promiseArray).then(() => { done.resolve() })
+    return done.promise
+}
