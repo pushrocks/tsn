@@ -120,7 +120,7 @@ export let compileGlobStringObject = (
             (err) => {
                 console.log(err)
             })
-            .then(cycleDone.resolve)
+            .then(cycleDone.resolve).catch(err => { console.log(err) })
     }
     plugins.q.all<void>(promiseArray).then(() => { done.resolve() })
     return done.promise

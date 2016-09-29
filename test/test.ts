@@ -1,5 +1,4 @@
 import 'typings-test'
-import * as smartpath from 'smartpath'
 import * as tsn from '../dist/index'
 import should = require('should')
 
