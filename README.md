@@ -17,7 +17,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Usage
-Tsn uses the **latest** npm version of typescript
+Tsn uses the **next** tagged npm version of typescript
 
 ```typescript
 import * as tsn from 'tsn'
