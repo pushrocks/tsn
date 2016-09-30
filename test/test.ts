@@ -8,7 +8,7 @@ let assetfiles: string[] = [
 ]
 
 let assetfiles2 = {
-    './test/assets/**/*.ts': './test/assets/output'
+    './test/assets/**/!(*.d.ts|*.js|output)': './test/assets/output'
 }
 
 describe('tsn', function () {
