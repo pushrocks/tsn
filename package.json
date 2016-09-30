@@ -27,8 +27,8 @@
     "beautylog": "^5.0.23",
     "lodash": "^4.16.2",
     "q": "^1.4.1",
-    "smartfile": "^4.0.23",
-    "smartpath": "^3.2.2",
+    "smartfile": "^4.0.24",
+    "smartpath": "^3.2.5",
     "typescript": "next",
     "typings-global": "^1.0.14"
   },
