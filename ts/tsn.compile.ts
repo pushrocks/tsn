@@ -88,17 +88,17 @@ export let compileFileArray = (
  * }
  */
 export let compileGlobStringObject = (
-    globStringArrayArg: any,
+    globStringObjectArg: any,
     tsOptionsArg: CompilerOptions = {},
     cwdArg: string = process.cwd()
 ) => {
     let done = plugins.q.defer<void>()
     let promiseArray: plugins.q.Promise<void>[] = []
-    for (let keyArg in globStringArrayArg) {
+    for (let keyArg in globStringObjectArg) {
         let cycleDone = plugins.q.defer<void>()
         promiseArray.push(cycleDone.promise)
         plugins.beautylog.info(
-            `TypeScript assignment: transpile from ${keyArg.blue} to ${globStringArrayArg[keyArg].blue}`
+            `TypeScript assignment: transpile from ${keyArg.blue} to ${globStringObjectArg[keyArg].blue}`
         )
         plugins.smartfile.fs.listFileTree(process.cwd(), keyArg)
             .then(
@@ -108,7 +108,7 @@ export let compileGlobStringObject = (
                     cwdArg
                 )
                 let destDir: string = plugins.smartpath.transform.toAbsolute(
-                    globStringArrayArg[keyArg],
+                    globStringObjectArg[keyArg],
                     cwdArg
                 )
                 return compileFileArray(

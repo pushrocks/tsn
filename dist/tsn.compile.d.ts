@@ -12,4 +12,4 @@ export declare let compileFileArray: (fileStringArrayArg: string[], destDir: str
  *     './some/origin/folder/**\/*.ts': './some/destination/folder'
  * }
  */
-export declare let compileGlobStringObject: (globStringArrayArg: any, tsOptionsArg?: plugins.typescript.CompilerOptions, cwdArg?: string) => plugins.q.Promise<void>;
+export declare let compileGlobStringObject: (globStringObjectArg: any, tsOptionsArg?: plugins.typescript.CompilerOptions, cwdArg?: string) => plugins.q.Promise<void>;
