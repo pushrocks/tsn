@@ -103,7 +103,7 @@ export let compileGlobStringObject = (
         plugins.beautylog.info(
             `TypeScript assignment: transpile from ${keyArg.blue} to ${globStringObjectArg[keyArg].blue}`
         )
-        plugins.smartfile.fs.listFileTree(process.cwd(), keyArg)
+        plugins.smartfile.fs.listFileTree(cwdArg, keyArg)
             .then(
             (filesToConvertArg: string[]) => {
                 let absoluteFilePathArray: string[] = plugins.smartpath.transform.toAbsolute(
