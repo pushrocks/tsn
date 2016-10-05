@@ -25,7 +25,7 @@
     "@types/q": "0.x.x",
     "@types/shelljs": "^0.3.31",
     "beautylog": "^5.0.23",
-    "lodash": "^4.16.2",
+    "lodash": "^4.16.3",
     "q": "^1.4.1",
     "smartfile": "^4.0.24",
     "smartpath": "^3.2.5",

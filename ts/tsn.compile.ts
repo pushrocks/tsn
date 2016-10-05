@@ -46,12 +46,15 @@ let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions
     let emitResult = program.emit()
 
     let allDiagnostics = plugins.typescript.getPreEmitDiagnostics(program).concat(emitResult.diagnostics)
-
-    allDiagnostics.forEach((diagnostic) => {
-        let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start)
-        let message = plugins.typescript.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
-        console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
-    })
+    try {
+        allDiagnostics.forEach((diagnostic) => {
+            let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start)
+            let message = plugins.typescript.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
+            console.log(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`)
+        })
+    } catch (err) {
+        console.log(allDiagnostics)
+    }
 
     let exitCode = emitResult.emitSkipped ? 1 : 0
     if (exitCode === 0) {
