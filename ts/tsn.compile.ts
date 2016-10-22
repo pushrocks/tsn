@@ -14,7 +14,7 @@ let compilerOptionsDefault: CompilerOptions = {
     noEmitOnError: false,
     module: plugins.typescript.ModuleKind.CommonJS,
     noImplicitAny: false,
-    target: plugins.typescript.ScriptTarget.ES6
+    target: plugins.typescript.ScriptTarget.ES2015
 }
 
 /**
