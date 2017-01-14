@@ -21,10 +21,6 @@ let compilerOptionsDefault: CompilerOptions = {
  * merges compilerOptions
  */
 let mergeCompilerOptions = function (customTsOptions: CompilerOptions, outDirArg: string): CompilerOptions {
-    // convert strings for module kind etc. to enum values
-    if (customTsOptions.module) { customTsOptions.module = plugins.typescript.ModuleKind[customTsOptions.module] }
-    if (customTsOptions.target) { customTsOptions.target = plugins.typescript.ScriptTarget[customTsOptions.target] }
-
     // create merged options 
     let mergedOptions: CompilerOptions = {} // create base 
     plugins.lodash.merge( // create final options

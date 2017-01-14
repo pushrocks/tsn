@@ -28,8 +28,32 @@ let myGlobStringObject = {
 }
 
 let tsOptions = {
-    // ...
+    target: tsn.ScriptTarget.ES2015,
+    module: tsn.ModuleKind.CommonJS
 }
+
+/*
+note: since this only works in code, here are the target numbers
+enum ScriptTarget {
+        ES3 = 0,
+        ES5 = 1,
+        ES2015 = 2,
+        ES2016 = 3,
+        ES2017 = 4,
+        ESNext = 5,
+        Latest = 5,
+}
+
+and here are the module kinds
+enum ModuleKind {
+        None = 0,
+        CommonJS = 1,
+        AMD = 2,
+        UMD = 3,
+        System = 4,
+        ES2015 = 5,
+    }
+*/
 
 let myCwd = process.cwd()
 
