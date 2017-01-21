@@ -36,7 +36,7 @@ let mergeCompilerOptions = function (customTsOptions: CompilerOptions, outDirArg
 /**
  * the internal main compiler function that compiles the files
  */
-let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions): plugins.q.Promise<void> => {
+let compiler = (fileNames: string[], options: plugins.typescript.CompilerOptions): Promise<void> => {
     let done = plugins.q.defer<void>()
     let program = plugins.typescript.createProgram(fileNames, options)
     let emitResult = program.emit()
@@ -71,7 +71,7 @@ export let compileFileArray = (
     fileStringArrayArg: string[],
     destDir: string,
     compilerOptionsArg: CompilerOptions = {}
-): plugins.q.Promise<void> => {
+): Promise<void> => {
     plugins.beautylog.info('checking files before compilation')
     return compiler(
         fileStringArrayArg,
@@ -92,12 +92,12 @@ export let compileGlobStringObject = (
     cwdArg: string = process.cwd()
 ) => {
     let done = plugins.q.defer<void>()
-    let promiseArray: plugins.q.Promise<void>[] = []
+    let promiseArray: Promise<void>[] = []
     for (let keyArg in globStringObjectArg) {
         let cycleDone = plugins.q.defer<void>()
         promiseArray.push(cycleDone.promise)
         plugins.beautylog.info(
-            `TypeScript assignment: transpile from ${keyArg.blue} to ${globStringObjectArg[keyArg].blue}`
+            `TypeScript assignment: transpile from ${keyArg} to ${globStringObjectArg[keyArg]}`
         )
         plugins.smartfile.fs.listFileTree(cwdArg, keyArg)
             .then(
@@ -121,6 +121,6 @@ export let compileGlobStringObject = (
             })
             .then(cycleDone.resolve).catch(err => { console.log(err) })
     }
-    plugins.q.all<void>(promiseArray).then(() => { done.resolve() })
+    Promise.all<void>(promiseArray).then(() => { done.resolve() })
     return done.promise
 }
