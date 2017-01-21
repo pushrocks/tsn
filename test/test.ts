@@ -1,6 +1,6 @@
 import 'typings-test'
 import * as tsn from '../dist/index'
-import should = require('should')
+import { expect } from 'smartchai'
 
 let assetfiles: string[] = [
     './test/assets/tocompile.ts',
